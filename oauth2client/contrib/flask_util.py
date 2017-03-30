@@ -421,6 +421,14 @@ class UserOAuth2(object):
             content = 'An error occurred: {0}'.format(exchange_error)
             return content, httplib.BAD_REQUEST
 
+        # Check for authorized domain
+        # https://github.com/google/oauth2client/issues/677#issuecomment-262074257
+
+        domain = flow_kwargs.get('hd',False)
+        if domain and credentials.id_token.get('hd') != domain:
+            return ('Unauthorized: you must sign in with an account belonging '
+                    'to the {0} domain.'.format(domain), httplib.FORBIDDEN)
+
         # Save the credentials to the storage.
         self.storage.put(credentials)
 
