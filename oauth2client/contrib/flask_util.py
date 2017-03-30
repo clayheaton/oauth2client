@@ -426,8 +426,7 @@ class UserOAuth2(object):
 
         domain = self.flow_kwargs.get('hd',False)
         if domain and credentials.id_token.get('hd') != domain:
-            return ('Unauthorized: you must sign in with an account belonging '
-                    'to the {0} domain.'.format(domain), httplib.FORBIDDEN)
+            return ('Unauthorized: only accounts from certain domains are allows to access this website.', httplib.FORBIDDEN)
 
         # Save the credentials to the storage.
         self.storage.put(credentials)
