@@ -423,6 +423,7 @@ class UserOAuth2(object):
 
         # Check for authorized domain
         # https://github.com/google/oauth2client/issues/677#issuecomment-262074257
+        print(flow)
 
         domain = flow_kwargs.get('hd',False)
         if domain and credentials.id_token.get('hd') != domain:
